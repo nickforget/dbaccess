@@ -1,0 +1,50 @@
+syntax = "proto3";
+
+package basetype;
+
+message Float
+{
+    float data = 1;
+}
+
+message Double
+{
+    double data = 1;
+}
+
+message Int32
+{
+    int32 data = 1;
+}
+
+message UInt32
+{
+    uint32 data = 1;
+}
+
+message Int64
+{
+    int64 data = 1;
+}
+
+message UInt64
+{
+    uint64 data = 1;
+}
+
+message String
+{
+    string data = 1;
+}
+
+message Bool
+{
+    bool data = 1;
+}
+
+message Date
+{
+    string data = 1;
+}
+
+

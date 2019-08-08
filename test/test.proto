@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package test;
+
+import "basetype.proto";
+
+message Student
+{
+	basetype.Int32  Age  = 1;
+	basetype.String Name = 2;
+	basetype.Int32  NO   = 3;
+}
