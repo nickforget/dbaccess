@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package dbaccess;
+
+import "basetype.proto";
+
+message Student
+{
+	Int32  Age  = 1;
+	String Name = 2;
+	Int32  NO   = 3;
+}

@@ -54,8 +54,8 @@ func (pDB *DBAccess) Insert(tableName string, data proto.Message) error {
 	return err
 }
 
-func (pDB *DBAccess) Query(tableName string, queryFiled []string, extra string, where proto.Message) ([]proto.Message, error) {
-	revData := make([]proto.Message, 0)
+func (pDB *DBAccess) Query(tableName string, queryFiled []string, extra string, where proto.Message) ([]interface{}, error) {
+	revData := make([]interface{}, 0)
 
 	// 返回查询的SQL和获取结果的参数
 	sql, param, filedMap := GetQueryInfo(tableName, where, queryFiled)

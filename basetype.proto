@@ -1,15 +1,15 @@
 syntax = "proto3";
 
-package basetype;
-
-message Float
-{
-    float data = 1;
-}
+package dbaccess;
 
 message Double
 {
     double data = 1;
+}
+
+message Float
+{
+    float data = 1;
 }
 
 message Int32
@@ -44,7 +44,7 @@ message Bool
 
 message Date
 {
-    string data = 1;
+		string data = 1;
 }
 
 

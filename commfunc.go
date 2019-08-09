@@ -3,7 +3,6 @@ package dbaccess
 import (
 	"database/sql"
 	"github.com/golang/protobuf/proto"
-	"github.com/nickforget/dbaccess/basetype"
 	"reflect"
 	"strings"
 )
@@ -27,24 +26,24 @@ func ProtoToMap(pb proto.Message) map[string]interface{} {
 		strFieldType = elem.Field(i).Type().String()
 
 		switch strFieldType {
-		case "*basetype.Float":
-			revMap[strName] = (**(elem.Field(i).Addr().Interface().(**basetype.Float))).Data
-		case "*basetype.Double":
-			revMap[strName] = (**(elem.Field(i).Addr().Interface().(**basetype.Double))).Data
-		case "*basetype.Int32":
-			revMap[strName] = (**(elem.Field(i).Addr().Interface().(**basetype.Int32))).Data
-		case "*basetype.UInt32":
-			revMap[strName] = (**(elem.Field(i).Addr().Interface().(**basetype.UInt32))).Data
-		case "*basetype.Int64":
-			revMap[strName] = (**(elem.Field(i).Addr().Interface().(**basetype.Int64))).Data
-		case "*basetype.UInt64":
-			revMap[strName] = (**(elem.Field(i).Addr().Interface().(**basetype.UInt64))).Data
-		case "*basetype.String":
-			revMap[strName] = (**(elem.Field(i).Addr().Interface().(**basetype.String))).Data
-		case "*basetype.Bool":
-			revMap[strName] = (**(elem.Field(i).Addr().Interface().(**basetype.Bool))).Data
-		case "*basetype.Date":
-			revMap[strName] = (**(elem.Field(i).Addr().Interface().(**basetype.Date))).Data
+		case "*dbaccess.Float":
+			revMap[strName] = (**(elem.Field(i).Addr().Interface().(**Float))).Data
+		case "*dbaccess.Double":
+			revMap[strName] = (**(elem.Field(i).Addr().Interface().(**Double))).Data
+		case "*dbaccess.Int32":
+			revMap[strName] = (**(elem.Field(i).Addr().Interface().(**Int32))).Data
+		case "*dbaccess.UInt32":
+			revMap[strName] = (**(elem.Field(i).Addr().Interface().(**UInt32))).Data
+		case "*dbaccess.Int64":
+			revMap[strName] = (**(elem.Field(i).Addr().Interface().(**Int64))).Data
+		case "*dbaccess.UInt64":
+			revMap[strName] = (**(elem.Field(i).Addr().Interface().(**UInt64))).Data
+		case "*dbaccess.String":
+			revMap[strName] = (**(elem.Field(i).Addr().Interface().(**String))).Data
+		case "*dbaccess.Bool":
+			revMap[strName] = (**(elem.Field(i).Addr().Interface().(**Bool))).Data
+		case "*dbaccess.Date":
+			revMap[strName] = (**(elem.Field(i).Addr().Interface().(**Date))).Data
 		}
 	}
 
@@ -66,74 +65,74 @@ func DataToProto(data []interface{}, inMap map[string]int, pb proto.Message) {
 
 		if index, ok := inMap[strName]; ok {
 			switch strFieldType {
-			case "*basetype.Float":
+			case "*dbaccess.Float":
 				valueSrc := (data[index]).(*sql.NullFloat64)
 				if valueSrc.Valid {
-					*(value.(**basetype.Float)) =  &basetype.Float{Data:(float32)(valueSrc.Float64)}
+					*(value.(**Float)) =  &Float{Data:(float32)(valueSrc.Float64)}
 				} else {
 					value = nil
 				}
 
-			case "*basetype.Double":
+			case "*dbaccess.Double":
 				valueSrc := (data[index]).(*sql.NullFloat64)
 				if valueSrc.Valid {
-					*(value.(**basetype.Double)) =  &basetype.Double{Data:(float64)(valueSrc.Float64)}
+					*(value.(**Double)) =  &Double{Data:(float64)(valueSrc.Float64)}
 				} else {
 					value = nil
 				}
 
-			case "*basetype.Int32":
+			case "*dbaccess.Int32":
 				valueSrc := (data[index]).(*sql.NullInt64)
 				if valueSrc.Valid {
-					*(value.(**basetype.Int32)) =  &basetype.Int32{Data:(int32)(valueSrc.Int64)}
+					*(value.(**Int32)) =  &Int32{Data:(int32)(valueSrc.Int64)}
 				} else {
 					value = nil
 				}
 
-			case "*basetype.UInt32":
+			case "*dbaccess.UInt32":
 				valueSrc := (data[index]).(*sql.NullInt64)
 				if valueSrc.Valid {
-					*(value.(**basetype.UInt32)) =  &basetype.UInt32{Data:(uint32)(valueSrc.Int64)}
+					*(value.(**UInt32)) =  &UInt32{Data:(uint32)(valueSrc.Int64)}
 				} else {
 					value = nil
 				}
 
-			case "*basetype.Int64":
+			case "*dbaccess.Int64":
 				valueSrc := (data[index]).(*sql.NullInt64)
 				if valueSrc.Valid {
-					*(value.(**basetype.Int64)) =  &basetype.Int64{Data:(int64)(valueSrc.Int64)}
+					*(value.(**Int64)) =  &Int64{Data:(int64)(valueSrc.Int64)}
 				} else {
 					value = nil
 				}
 
-			case "*basetype.UInt64":
+			case "*dbaccess.UInt64":
 				valueSrc := (data[index]).(*sql.NullInt64)
 				if valueSrc.Valid {
-					*(value.(**basetype.UInt64)) =  &basetype.UInt64{Data:(uint64)(valueSrc.Int64)}
+					*(value.(**UInt64)) =  &UInt64{Data:(uint64)(valueSrc.Int64)}
 				} else {
 					value = nil
 				}
 
-			case "*basetype.String":
+			case "*dbaccess.String":
 				valueSrc := (data[index]).(*sql.NullString)
 				if valueSrc.Valid {
-					*(value.(**basetype.String)) =  &basetype.String{Data:(string)(valueSrc.String)}
+					*(value.(**String)) =  &String{Data:(string)(valueSrc.String)}
 				} else {
 					value = nil
 				}
 
-			case "*basetype.Bool":
+			case "*dbaccess.Bool":
 				valueSrc := (data[index]).(*sql.NullBool)
 				if valueSrc.Valid {
-					*(value.(**basetype.Bool)) =  &basetype.Bool{Data:(bool)(valueSrc.Bool)}
+					*(value.(**Bool)) =  &Bool{Data:(bool)(valueSrc.Bool)}
 				} else {
 					value = nil
 				}
 
-			case "*basetype.Date":
+			case "*dbaccess.Date":
 				valueSrc := (data[index]).(*sql.NullString)
 				if valueSrc.Valid {
-					*(value.(**basetype.String)) =  &basetype.String{Data:(string)(valueSrc.String)}
+					*(value.(**String)) =  &String{Data:(string)(valueSrc.String)}
 				} else {
 					value = nil
 				}
@@ -193,21 +192,21 @@ func GetQueryInfo(tableName string, pb proto.Message, queryField []string) (stri
 		revFieldMap[filedName] = iNum
 
 		switch filedType {
-		case "*basetype.Float":
+		case "*dbaccess.Float":
 			revResult = append(revResult, new(sql.NullFloat64))
-		case "*basetype.Double":
+		case "*dbaccess.Double":
 			revResult = append(revResult, new(sql.NullFloat64))
-		case "*basetype.Int32":
+		case "*dbaccess.Int32":
 			revResult = append(revResult, new(sql.NullInt64))
-		case "*basetype.UInt32":
+		case "*dbaccess.UInt32":
 			revResult = append(revResult, new(sql.NullInt64))
-		case "*basetype.Int64":
+		case "*dbaccess.Int64":
 			revResult = append(revResult, new(sql.NullInt64))
-		case "*basetype.UInt64":
+		case "*dbaccess.UInt64":
 			revResult = append(revResult, new(sql.NullInt64))
-		case "*basetype.String":
+		case "*dbaccess.String":
 			revResult = append(revResult, new(sql.NullString))
-		case "*basetype.Date":
+		case "*dbaccess.Date":
 			revResult = append(revResult, new(sql.NullString))
 		}
 

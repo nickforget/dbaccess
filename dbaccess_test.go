@@ -1,10 +1,7 @@
-package dbaccess_test
+package dbaccess
 
 import (
 	"fmt"
-	"github.com/nickforget/dbaccess/basetype"
-	"github.com/nickforget/dbaccess/dbaccess"
-	"github.com/nickforget/dbaccess/test"
 	"testing"
 )
 
@@ -18,18 +15,18 @@ CREATE TABLE student (
 );
 */
 
-var db *dbaccess.DBAccess
+var db *DBAccess
 
 func init() {
-	db = dbaccess.NewDBAccess("mysql", "root:muchinfo@/test")
+	db = NewDBAccess("mysql", "root:muchinfo@/test")
 	db.ConnDB()
 }
 
 func TestDBAccessInsert(t *testing.T) {
-	stu := &test.Student{
-		Name: &basetype.String{Data:"zouqiang"},
-		Age:  &basetype.Int32{Data:30},
-		NO:   &basetype.Int32{Data:2},
+	stu := &Student{
+		Name: &String{Data:"zouqiang"},
+		Age:  &Int32{Data:30},
+		NO:   &Int32{Data:2},
 	}
 
 	err := db.Insert("student", stu)
@@ -40,11 +37,11 @@ func TestDBAccessInsert(t *testing.T) {
 }
 
 func TestDBAccessQuery(t *testing.T) {
-	data, err := db.Query("student", []string{}, "", &test.Student{})
+	data, err := db.Query("student", []string{}, "", &Student{})
 
 	if err == nil {
 		for _, v := range data {
-			tmp := v.(*test.Student)
+			tmp := v.(*Student)
 			t.Log(tmp.GetAge(), tmp.GetName(), tmp.GetNO())
 		}
 
@@ -54,13 +51,13 @@ func TestDBAccessQuery(t *testing.T) {
 }
 
 func TestDBAccessUpdate(t *testing.T) {
-	stu := &test.Student{
-		Name: &basetype.String{Data:"chenyirui"},
-		Age:  &basetype.Int32{Data:20},
+	stu := &Student{
+		Name: &String{Data:"chenyirui"},
+		Age:  &Int32{Data:20},
 	}
 
-	err := db.Update("student", stu, &test.Student{
-		NO: &basetype.Int32{Data:2},
+	err := db.Update("student", stu, &Student{
+		NO: &Int32{Data:2},
 	})
 
 	if err != nil {
@@ -69,7 +66,7 @@ func TestDBAccessUpdate(t *testing.T) {
 }
 
 func TestDBAccessDelete(t *testing.T) {
-	err := db.Delete("student", &test.Student{})
+	err := db.Delete("student", &Student{})
 
 	if err != nil {
 		t.Error("Delete err ", err)
@@ -77,10 +74,10 @@ func TestDBAccessDelete(t *testing.T) {
 }
 
 func TestDBAccessCommit(t *testing.T) {
-	stu := &test.Student{
-		Name: &basetype.String{Data:"chenyirui"},
-		Age:  &basetype.Int32{Data:20},
-		NO:  &basetype.Int32{Data:0},
+	stu := &Student{
+		Name: &String{Data:"chenyirui"},
+		Age:  &Int32{Data:20},
+		NO:  &Int32{Data:0},
 	}
 
 	err := db.SetNotAutoCommit()
@@ -90,7 +87,7 @@ func TestDBAccessCommit(t *testing.T) {
 	}
 
 	for i := int32(0); i < 10; i++ {
-		stu.NO = &basetype.Int32{Data:i}
+		stu.NO = &Int32{Data:i}
 		err = db.Insert("student", stu)
 
 		if err != nil {
@@ -102,10 +99,10 @@ func TestDBAccessCommit(t *testing.T) {
 }
 
 func TestDBAccessRollback(t *testing.T) {
-	stu := &test.Student{
-		Name: &basetype.String{Data:"chenyirui"},
-		Age: &basetype.Int32{Data:20},
-		NO: &basetype.Int32{Data:0},
+	stu := &Student{
+		Name: &String{Data:"chenyirui"},
+		Age: &Int32{Data:20},
+		NO: &Int32{Data:0},
 	}
 
 	err := db.SetNotAutoCommit()
@@ -115,7 +112,7 @@ func TestDBAccessRollback(t *testing.T) {
 	}
 
 	for i := int32(10); i < 20; i++ {
-		stu.NO = &basetype.Int32{Data:i}
+		stu.NO = &Int32{Data:i}
 		err = db.Insert("student", stu)
 
 		if err != nil {
@@ -124,11 +121,11 @@ func TestDBAccessRollback(t *testing.T) {
 	}
 
 	// 查询
-	revData, err := db.Query("student", []string{}, "", &test.Student{})
+	revData, err := db.Query("student", []string{}, "", &Student{})
 
 	if err == nil {
 		for _, v := range revData {
-			tmp := *v.(*test.Student)
+			tmp := v.(*Student)
 			fmt.Println(tmp.GetName(), tmp.GetName(), tmp.GetAge(), tmp.GetNO())
 		}
 	}
@@ -136,11 +133,11 @@ func TestDBAccessRollback(t *testing.T) {
 	db.Rollback()
 
 	// 回滚之后再次查询结果
-	revData, err = db.Query("student", []string{}, "", &test.Student{})
+	revData, err = db.Query("student", []string{}, "", &Student{})
 
 	if err == nil {
 		for _, v := range revData {
-			tmp := *v.(*test.Student)
+			tmp := v.(*Student)
 			fmt.Println(tmp.GetName(), tmp.GetName(), tmp.GetAge(), tmp.GetNO())
 		}
 	}
