@@ -20,6 +20,10 @@ func NewDBAccess(inDBType string, inConnstr string) *DBAccess {
 	}
 }
 
+func (pDB *DBAccess) DBPing() error {
+	return pDB.db.Ping()
+}
+
 func (pDB *DBAccess) ConnDB() error {
 	db, err := sql.Open(pDB.dbType, pDB.connStr)
 	pDB.db = db
